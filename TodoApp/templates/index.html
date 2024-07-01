@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  l
+  
      <link rel="stylesheet" href="{% static 'css/style1.css' %} ">
+     
   
   </head>
   <body>
@@ -25,31 +26,31 @@
       <div class="controls">
         <div class="filters">
           <span class="{% if filter == 'all' %} active {% endif %}">
-            <a href="{% url 'index' %}?filter=all" style="text-decoration: none;">All</a>
+            <a href="{% url 'index' %}?filter=all" style="text-decoration: none; color: rgb(0, 0, 0);">All</a>
           </span>
           <span class="{% if filter == 'pending' %} active {% endif %}">
-            <a href="{% url 'index' %}?filter=pending" style="text-decoration: none;">Pending</a>
+            <a href="{% url 'index' %}?filter=pending" style="text-decoration: none; color: rgb(0, 0, 0); ">Pending</a>
           </span>
           <span class="{% if filter == 'completed' %} active {% endif %}">
-            <a href="{% url 'index' %}?filter=completed" style="text-decoration: none;">Completed</a>
+            <a href="{% url 'index' %}?filter=completed" style="text-decoration: none; color: rgb(0, 0, 0);">Completed</a>
           </span>
+          <span><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket fa-xl"></i></a></span>
         </div>
-        <a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
-        <a href="{% url "delete_all_task" %}"><i class="fa-solid fa-trash"></i></a>
+        
+        <a href="{% url "delete_all_task" %}" style="text-decoration: none; display: inline-block; padding: 10px 10px; border-radius: 11px; background-color: #4149e5; color: white; font-weight: bold; font-size: 12px;">Clear All</a>
+
       </div>
       <ul class="task-box">
         {% for i in task %}
         <li class="task">
           <label for="">
-            <input type="checkbox" id="{{ i.id }}" {% if i.completed %} checked {% endif %}/>
-            <p class="{% if i.completed %} checked {% endif %}">{{ i.des }}</p>
+            <input type="checkbox" id="{{ i.id }}" {% if i.completed %} checked {% endif %}/>             
+          <p class="{% if i.completed %} checked {% endif %}">{{ i.des }}</p>
           </label>
           <div class="settings">
-            <i class="uil uil-ellipsis-h"></i>
-            <ul class="task-menu">
-              <li><i class="uil uil-pen"></i>Edit</li>
-              <li><i class="uil uil-trash"></i>Delete</li>
-            </ul>
+            <i class="fa-solid fa-pen-to-square" style="color: #000452"></i>
+            <i class="fa-solid fa-trash" style="color:#4149e5"></i>
+           
           </div>
         </li>
         {% empty %}
@@ -78,12 +79,7 @@
              });
            });
          });
-       document.querySelectorAll('.settings i').forEach(icon => {
-         icon.addEventListener('click', function() {
-           const menu = this.nextElementSibling;
-           menu.classList.toggle('show');
-         });
-       });
+      
 
        document.getElementById('ok1').addEventListener('change', function() {
          document.getElementById('ok').click();
