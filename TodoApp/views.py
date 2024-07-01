@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import *
 import sweetify
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -47,7 +48,6 @@ def index(request):
     if request.method == 'POST':
         Task.objects.create(user=user, des=request.POST['des'])
         return redirect('index')
-    
 
 
     filter = request.GET.get('filter', 'all')
@@ -81,5 +81,19 @@ def toggle_task(request, task_id):
     task.completed = not task.completed
     task.save()
     return redirect('index')
+
+def delete_all_task(request):
+    user = User.objects.get(email=request.session['email'])
+    task = Task.objects.filter(user=user)
+    if task:
+        task.delete()
+        sweetify.success(request,"All Tasks Delete Successfully...")
+        return redirect('index')
+    else:
+        sweetify.info(request,"No Task Found....")
+        return redirect('index')
+    
+
+    
 
      
