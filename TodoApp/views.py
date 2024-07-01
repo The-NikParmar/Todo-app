@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .models import *
 import sweetify
 
@@ -47,21 +47,25 @@ def index(request):
     if request.method == 'POST':
         Task.objects.create(user=user, des=request.POST['des'])
         return redirect('index')
+    
+    task1 = Task.objects.filter(user=user)
 
-    # Get tasks based on filter
     filter = request.GET.get('filter', 'all')
     if filter == 'pending':
-        tasks = Task.objects.filter(completed=False)
+        tasks = Task.objects.filter(user=user,completed=False)
     elif filter == 'completed':
-        tasks = Task.objects.filter(completed=True)
+        tasks = Task.objects.filter(user=user,completed=True)
     else:
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(user=user)
     
     context = {
         'task': tasks,
+        'task1': task1,
         'filter': filter,
     }
     return render(request, 'index.html', context)
+
+
     
 def logout(request):
      del request.session['email']
@@ -75,5 +79,10 @@ def pending(request):
     else:
         return redirect('login')
 
+def toggle_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.completed = not task.completed
+    task.save()
+    return redirect('index')
 
      
