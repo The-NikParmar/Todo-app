@@ -48,7 +48,7 @@ def index(request):
         Task.objects.create(user=user, des=request.POST['des'])
         return redirect('index')
     
-    task1 = Task.objects.filter(user=user)
+
 
     filter = request.GET.get('filter', 'all')
     if filter == 'pending':
@@ -60,12 +60,9 @@ def index(request):
     
     context = {
         'task': tasks,
-        'task1': task1,
         'filter': filter,
     }
     return render(request, 'index.html', context)
-
-
     
 def logout(request):
      del request.session['email']
