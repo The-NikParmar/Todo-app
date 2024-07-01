@@ -259,7 +259,7 @@
         {% for i in task %}
         <li class="task">
           <label for="">
-            <input type="checkbox" id="${id}" {% if i.completed %} checked {% endif %}/>
+            <input type="checkbox" id="{{ i.id }}" {% if i.completed %} checked {% endif %}/>
             <p class="{% if i.completed %} checked {% endif %}">{{ i.des }}</p>
           </label>
           <div class="settings">
@@ -270,8 +270,11 @@
             </ul>
           </div>
         </li>
+        {% empty %}
+        <li>No tasks found.</li>
         {% endfor %}
-      </ul>
+    </ul>
+    
     </div>
     <script>
       document.querySelectorAll('.settings i').forEach(icon => {

@@ -49,15 +49,19 @@ def index(request):
         return redirect('index')
 
     # Get tasks based on filter
-    filter_type = request.GET.get('filter', 'all')  # Default to 'all' if filter not provided
-    if filter_type == 'pending':
-        tasks = Task.objects.filter(user=user, completed=False)
-    elif filter_type == 'completed':
-        tasks = Task.objects.filter(user=user, completed=True)
+    filter = request.GET.get('filter', 'all')
+    if filter == 'pending':
+        tasks = Task.objects.filter(completed=False)
+    elif filter == 'completed':
+        tasks = Task.objects.filter(completed=True)
     else:
-        tasks = Task.objects.filter(user=user)  # 'all' or any unrecognized filter shows all tasks
-
-    return render(request, "index.html", {'tasks': tasks})
+        tasks = Task.objects.all()
+    
+    context = {
+        'task': tasks,
+        'filter': filter,
+    }
+    return render(request, 'index.html', context)
     
 def logout(request):
      del request.session['email']
