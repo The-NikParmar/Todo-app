@@ -51,7 +51,7 @@ def index(request):
         return redirect('index')
 
 
-    filter = request.GET.get('filter', 'all')
+    filter = request.GET.get('filter')
     if filter == 'pending':
         tasks = Task.objects.filter(user=user,completed=False)
     elif filter == 'completed':
@@ -93,6 +93,22 @@ def delete_all_task(request):
     else:
         sweetify.info(request,"No Task Found....")
         return redirect('index')
+    
+def edit_task(request,id):
+    task=Task.objects.get(id=id)
+    print(task)
+    if request.POST:
+        task.des=request.POST['taskDescription']
+        task.save()
+        return redirect('index')   
+    
+def delete_task(request,id):
+    task=Task.objects.get(id=id)
+    print(task)
+    task.delete()
+    return redirect('index') 
+
+        
     
 
     

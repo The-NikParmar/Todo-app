@@ -24,6 +24,8 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('logout', views.logout, name='logout'),
     path('pending', views.pending, name='pending'),
+    path('edit_task/<int:id>/', views.edit_task, name='edit_task'),
+    path('delete_task/<int:id>/', views.delete_task, name='delete_task'),
     path('delete_all_task', views.delete_all_task, name='delete_all_task'),
     path('toggle/<int:task_id>/', views.toggle_task, name='toggle_task'),
 
