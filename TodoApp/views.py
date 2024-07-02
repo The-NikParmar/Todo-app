@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .models import *
 import sweetify
 from django.http import JsonResponse
+from django.utils.timezone import now
 
 # Create your views here.
 
@@ -46,7 +47,7 @@ def login(request):
 def index(request):
     user = User.objects.get(email=request.session['email'])
     if request.method == 'POST':
-        Task.objects.create(user=user, des=request.POST['des'])
+        Task.objects.create(user=user, des=request.POST['des'],created_at=now())
         return redirect('index')
 
 
